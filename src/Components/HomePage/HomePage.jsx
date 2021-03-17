@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import st from './HomePage.module.css';
-import fetchTrendingFilms from '../../Service/ApiMovies';
+import {fetchTrendingFilms} from '../../Service/ApiMovies';
 
 const srcUrl = 'https://image.tmdb.org/t/p/w500';
 const HomePage = () => {

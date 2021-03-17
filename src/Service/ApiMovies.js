@@ -8,4 +8,12 @@ const fetchTrendingFilms = () => {
         .then(({ data }) => data.results);
 };
 
-export default fetchTrendingFilms;
+const fetchFindFilms = searchQuery => {
+    return axios
+        .get(
+            `search/movie?api_key=${API_KEY}&language=en-US&page=1&include_adult=false&query=${searchQuery}`,
+        )
+        .then(({ data }) => data.results);
+};
+
+export { fetchTrendingFilms, fetchFindFilms };
