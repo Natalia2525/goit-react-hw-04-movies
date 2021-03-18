@@ -1,9 +1,13 @@
 import { useState, useEffect } from 'react';
 import { fetchFindFilms } from '../../Service/ApiMovies';
+import { Link, useRouteMatch } from 'react-router-dom';
+
 const MoviesPage = () => {
     const [searchQuery, setsearchQuery] = useState('');
     const [findFilms, setfindFilms] = useState([]);
     const [request, SetRequest] = useState('');
+
+    const { url } = useRouteMatch();
 
     const handleChange = e => {
         setsearchQuery(e.currentTarget.value.toLowerCase());
@@ -16,7 +20,7 @@ const MoviesPage = () => {
     };
 
     useEffect(() => {
-        fetchFindFilms(request).then(results => setfindFilms(results));
+        fetchFindFilms(request).then(setfindFilms);
     }, [request]);
 
     return (
@@ -33,11 +37,13 @@ const MoviesPage = () => {
                     <span>Search</span>
                 </button>
             </form>
-            {findFilms.map(({ title, id, name }) => (
-                <li key={id}>
-                    <h3>{title || name}</h3>
-                </li>
-            ))}
+            <ul>
+                {findFilms.map(({ title, id, name }) => (
+                    <li key={id}>
+                        <Link to={`${url}/${id}`}>{title || name}</Link>
+                    </li>
+                ))}
+            </ul>
         </>
     );
 };

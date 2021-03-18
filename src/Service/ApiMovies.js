@@ -16,4 +16,28 @@ const fetchFindFilms = searchQuery => {
         .then(({ data }) => data.results);
 };
 
-export { fetchTrendingFilms, fetchFindFilms };
+const fetchCardFilm = movie_id => {
+    return axios
+        .get(`movie/${movie_id}?api_key=${API_KEY}&language=en-US`)
+        .then(({ data }) => data);
+};
+
+const fetchCast = movie_id => {
+    return axios
+        .get(`movie/${movie_id}/credits?api_key=${API_KEY}&language=en-US`)
+        .then(({ data }) => data.cast);
+};
+
+const fetchReviews = movie_id => {
+    return axios
+        .get(`movie/${movie_id}/reviews?api_key=${API_KEY}&language=en-US`)
+        .then(({ data }) => data.results);
+};
+
+export {
+    fetchTrendingFilms,
+    fetchFindFilms,
+    fetchCardFilm,
+    fetchCast,
+    fetchReviews,
+};
