@@ -11,6 +11,8 @@ import {
 } from 'react-router-dom';
 import { fetchCardFilm } from '../../Service/ApiMovies';
 import notFound from '../../images/notFound.jpg';
+import st from './MovieDetailsPage.module.css';
+import Spinner from '../Spinner';
 
 const Cast = lazy(() => import('../Cast/Cast' /* webpackChunkName: "Cast" */));
 
@@ -34,8 +36,8 @@ const MovieDetailsPage = () => {
         return history.push(location?.state?.from || '/');
     };
     return (
-        <>
-            <button onClick={handleClickBack}>
+        <div className={st.card}>
+            <button className={st.btn} onClick={handleClickBack}>
                 <span>Go Back</span>
             </button>
             {film && (
@@ -43,18 +45,32 @@ const MovieDetailsPage = () => {
                     <img
                         src={
                             film.poster_path
-                                ? `https://image.tmdb.org/t/p/w500/${film.poster_path}`
+                                ? `${srcUrl}/${film.poster_path}`
                                 : notFound
                         }
                         alt={film.title}
                     />
-                    <h3>{film.title}</h3>
-                    <h2>Overview</h2>
-                    <span>{film.overview}</span>
-                    <h2>Additional information</h2>
-                    <ul>
+                    <div className={st.description}>
+                        <h2 className={st.title}>{film.title}</h2>
+                        <p className={st.score}>
+                            User Score: {film.popularity}
+                        </p>
+                        <h3 className={st.subTittle}>Overview</h3>
+                        <span className={st.overview}>{film.overview}</span>
+                        <h3 className={st.subTittle}>Genres</h3>
+                        <ul className={st.genresList}>
+                            {film.genres.map(genre => (
+                                <li className={st.genre} key={genre.id}>
+                                    {genre.name}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                    <h2 className={st.title}>Additional information</h2>
+                    <ul className={st.list}>
                         <li>
                             <NavLink
+                                className={st.link}
                                 to={{
                                     pathname: `${url}/cast`,
                                     state: { ...location.state },
@@ -65,6 +81,7 @@ const MovieDetailsPage = () => {
                         </li>
                         <li>
                             <NavLink
+                                className={st.link}
                                 to={{
                                     pathname: `${url}/reviews`,
                                     state: { ...location.state },
@@ -75,7 +92,7 @@ const MovieDetailsPage = () => {
                         </li>
                     </ul>
                     <hr />
-                    <Suspense fallback={<h1>Загружаем...</h1>}>
+                    <Suspense fallback={<Spinner />}>
                         <Switch>
                             <Route
                                 exact
@@ -91,7 +108,7 @@ const MovieDetailsPage = () => {
                     </Suspense>
                 </>
             )}
-        </>
+        </div>
     );
 };
 

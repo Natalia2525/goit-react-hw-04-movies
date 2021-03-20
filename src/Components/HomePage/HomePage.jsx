@@ -14,11 +14,11 @@ const HomePage = () => {
 
     return (
         <>
-            <h1>Tranding Films</h1>
+            <h1 className={st.title_head}>Tranding Films</h1>
             <ul className={st.list}>
                 {films.map(({ poster_path, title, id, name }) => (
                     <li key={id} className={st.item}>
-                        <Link to={`/movies/${id}`}>
+                        <Link className={st.link} to={`/movies/${id}`}>
                             <img src={`${srcUrl}${poster_path}`} alt={title} />
                             <h3 className={st.title}>{title || name}</h3>
                         </Link>

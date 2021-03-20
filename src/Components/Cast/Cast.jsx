@@ -1,27 +1,36 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchCast } from '../../Service/ApiMovies';
-
+import notFound from '../../images/notFound.jpg';
+import st from './Cast.module.css';
 const srcUrl = 'https://image.tmdb.org/t/p/w500';
 const Cast = () => {
     const [cast, setCast] = useState();
     const { movieId } = useParams();
     useEffect(() => {
-        fetchCast(movieId).then(setCast);
+        if (movieId && fetchCast(movieId).then(setCast));
     }, [movieId]);
 
     return (
         <>
             {cast && (
-                <ul>
+                <ul className={st.list}>
                     {cast.map(({ cast_id, profile_path, name, character }) => (
-                        <li key={cast_id}>
+                        <li className={st.castCard} key={cast_id}>
                             <img
-                                src={`https://image.tmdb.org/t/p/w500/${profile_path}`}
-                                alt=""
+                                className={st.img}
+                                src={
+                                    profile_path
+                                        ? `${srcUrl}/${profile_path}`
+                                        : notFound
+                                }
+                                alt={name}
                             />
-                            <h3>{name}</h3>
-                            <span>Charachter: {character}</span>
+
+                            <h3 className={st.name}>{name}</h3>
+                            <span className={st.character}>
+                                Charachter: {character}
+                            </span>
                         </li>
                     ))}
                 </ul>
