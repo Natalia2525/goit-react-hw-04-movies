@@ -11,7 +11,7 @@ const fetchTrendingFilms = () => {
 const fetchFindFilms = searchQuery => {
     return axios
         .get(
-            `search/movie?api_key=${API_KEY}&language=en-US&page=1&include_adult=false&query=${searchQuery}`,
+            `search/movie?api_key=${API_KEY}&language=en-US&page=1&include_adult=true&query=${searchQuery}`,
         )
         .then(({ data }) => data.results);
 };
